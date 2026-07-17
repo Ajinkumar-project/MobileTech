@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Authentication</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+    cursor:none !important ;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:white;
+
+}
+
+.container{
+    width:400px;
+    background:#fff;
+    border-radius:15px;
+    padding:35px;
+    box-shadow: 0px 0px 20px -3px #0066FF;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.input-box{
+    margin-bottom:15px;
+}
+
+.input-box input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:linear-gradient(90deg, #0066FF,#0066FF, #ea03ff);
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+
+
+.switch{
+    margin-top:20px;
+    text-align:center;
+}
+
+.switch a{
+    color:#2563eb;
+    cursor:pointer;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.form{
+    display:none;
+}
+
+.form.active{
+    display:block;
+}
+
+.error{
+    color:red;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+input:active, input:focus{
+    outline:none;
+    border:1px solid #0066FF;
+    box-shadow: 0px 0px 5px -3px #0066FF;
+}
+
+#cursor{
+    z-index:999999;
+    width:25px;
+    height:25px;
+    border:1.5px solid #0066FF;
+    border-radius:50%;
+    position:fixed;
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+}
+
+#cursor.grow{
+    animation: cursor-grow 0.5s forwards;
+}
+
+@keyframes cursor-grow {
+    
+    100% {
+        transform: translate(-50%, -50%) scale(1.4);
+    }
+}
+
+
+
+#cursordot{
+    z-index:999999;
+    pointer-events:none;
+    width:8px;
+    height:8px;
+    background:rgb(255, 46, 126);
+    border-radius:50%;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Login Form -->
+    <div id="loginForm" class="form active">
+
+        <h2>Login</h2>
+
+        <form method="POST" action="{% url 'login' %}" autocomplete="off">
+
+            {% csrf_token %}
+
+            <div class="input-box">
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    required>
+            </div>
+
+            <div class="input-box">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required>
+            </div>
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+        <div class="switch">
+            Don't have an account?
+            <a onclick="showRegister()">Create Account</a>
+        </div>
+
+    </div>
+
+
+    <!-- Register Form -->
+    <div id="registerForm" class="form">
+
+        <h2>Create Account</h2>
+
+        <form method="POST" action="{% url 'register' %}">
+
+            {% csrf_token %}
+
+            <div class="input-box">
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    required>
+                    
+            </div>
+
+            <div class="input-box">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required>
+            </div>
+
+            <div class="input-box">
+                <input
+                    type="password"
+                    name="password1"
+                    placeholder="Password"
+                    required>
+            </div>
+
+            <div class="input-box">
+                <input
+                    type="password"
+                    name="password2"
+                    placeholder="Confirm Password"
+                    required>
+            </div>
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="switch">
+            Already have an account?
+            <a onclick="showLogin()">Login</a>
+        </div>
+
+    </div>
+
+</div>
+<div id="cursor"></div>
+    <div id="cursordot"></div>
+<script>
+
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+
+function showRegister(){
+
+    loginForm.classList.remove("active");
+    registerForm.classList.add("active");
+
+}
+
+function showLogin(){
+
+    registerForm.classList.remove("active");
+    loginForm.classList.add("active");
+
+}
+const cursor = document.getElementById("cursor");
+const cursordot = document.getElementById("cursordot");
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+let x = mouseX;
+let y = mouseY;
+
+document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursordot.style.left = mouseX + "px";
+    cursordot.style.top = mouseY + "px";
+});
+document.querySelectorAll("h1,h2,h3,p,a,button").forEach(el => {
+    el.addEventListener("mouseenter", () => {
+        cursor.classList.add("grow");
+    });
+
+    el.addEventListener("mouseleave", () => {
+        cursor.classList.remove("grow");
+    });
+});
+
+function animate() {
+    x += (mouseX - x) * 0.10;
+    y += (mouseY - y) * 0.10;
+
+    cursor.style.left = x + "px";
+    cursor.style.top = y + "px";
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+</script>
+
+</body>
+</html>

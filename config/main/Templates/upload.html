@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'upload.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+    <ul class="nav justify-content-center">
+        <li class="nav-item" >
+            <a class="tab a" href="{% url 'home' %}" class="tab" id="home">Home</a>
+        </li>
+        <li class="nav-item" >
+            <span  class="tab activeTab"  id="up" onclick="activepage('p1','up')" >Upload</span>
+        </li>
+        <li class="nav-item" >
+            <span class="tab" id="up2" onclick="activepage('p2','up2')">Update</span>
+        </li>
+    </ul>
+</header>
+
+    <div class="page active" id="p1">
+    <form class="container" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>
+            submit
+        </button>
+        
+    </form>
+
+   </div>
+    <hr>
+
+    <div class="page" id="p2">
+            <div class="grid">
+            {% for i in data %}
+                
+                <div class="cards">
+                    <div class="Prodectimg">
+                        <img src="{{ i.image.url }}" alt="">
+                    </div>
+
+                    <div class="Prodectdtl">
+                        <div class="d-flex justify-content-between ">
+                            <span class="proname">{{ i.name }}</span>
+                            <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
+                        </div>
+                        <span> <strong>Category</strong>{{i.category}}</span>
+                        <div class="d-flex justify-content-between ">
+                        <a class="btn btn-success" href="{% url 'update' i.id %}">Edit</a>
+                        <a class="btn btn-warning" href="{% url 'delete' i.id %}">Delete</a>
+
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+                </div>
+                <div id="cursor"></div>
+</body>
+
+    <script src="{% static 'uploads.js' %}"></script>
+</html>

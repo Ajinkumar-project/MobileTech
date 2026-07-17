@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+.cards{
+    padding: 10px;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 10px;
+    height: 480px;
+    width: 380px;
+    box-shadow: 0px 0px 20px -8px #0066FF;
+}
+
+.cards:hover{
+    animation: cards 0.3s forwards;
+}
+@keyframes cards{
+   to{
+    box-shadow: 0px 0px 40px -8px #0066FF;
+    margin-top: -3px;
+   }
+}
+
+.Prodectimg{
+    height: 65%;
+}
+.Prodectdtl{
+    margin-top: 10px;
+    border-top:1px solid rgb(201, 201, 201);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 10px;
+    height: 35%;
+    background-color: #ffffff;
+}
+.Prodectimg img{
+    height: 100%;
+    width: 100%;
+    object-fit:contain;
+}
+.addcart{
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid #0066FF;
+    color: #0066FF;
+    padding: 10px;
+    display: block;
+}
+.addcart:hover{
+    background-color: #0066FF;
+    color: #0F172A;
+}
+    </style>
+</head>
+<body>
+    
+    {% for i in data %}
+    <div class="cards">
+                    <div class="Prodectimg">
+                        <img src="{{ i.image.url }}" alt="{{ i.name }}">
+
+                    </div>
+                    <div class="Prodectdtl">
+                        <div class="d-flex justify-content-between ">
+                            <span class="proname">{{ i.name }}</span>
+                            <span class="text-primary"><strong>₹ {{i.price}}</strong></span>
+                        </div>
+                        <span> <strong>⭐4.9</strong>(1002 Reviews)</span>
+                        <button class="addcart"
+                            onclick="addCart('Asus ROG 9 ','images/New folder/bud asus-rog-phone-9  50000.jpg' ,'54510')">Add
+                            Cart +</button>
+                    </div>
+                </div>
+                {% endfor %}
+</body>
+</html>

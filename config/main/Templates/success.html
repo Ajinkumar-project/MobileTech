@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .success-box {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h4 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        .countdown {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 10px 0;
+        }
+        a.btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .btn-upload {
+            background: #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-box">
+        <h4>✅ Upload Successful!</h4>
+        <p>You will be redirected to Home in 
+           <span id="countdown" class="countdown">5</span> seconds...</p>
+        <a href="{% url 'upload' %}" class="btn btn-upload" id="uploadLink">Upload Another</a>
+    </div>
+
+    <script>
+        let seconds = 5;
+        let countdownEl = document.getElementById("countdown");
+
+        let timer = setInterval(function() {
+            seconds--;
+            countdownEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.history.back();
+            }
+        }, 1000);
+
+        // Cancel redirect if user clicks "Upload Another"
+        document.getElementById("uploadLink").addEventListener("click", function() {
+            clearInterval(timer);
+        });
+    </script>
+</body>
+</html>
