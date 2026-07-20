@@ -135,8 +135,7 @@ input:focus {
     z-index: -1;  
 }
 .cl3{
-    margin-top: 100px;
-    margin-left: 100px;
+    
     z-index: 100;
 }
 .cl4{
@@ -189,11 +188,11 @@ input:focus {
     margin-top: -350px;
     margin-right: 150px;
     margin-left: 0px;
-    box-shadow: 0px 0px 20px -8px #0066FF;
     animation: banner 7s infinite ;
 }
 .banner img{
     object-fit: cover;
+    box-shadow: 0px 0px 20px -8px #0066FF;
     border-radius: 20px;
     transition: transform 0.4s ease;
 }
@@ -312,13 +311,11 @@ input:focus {
     font-weight: bolder;
 }
 .FlagshipGrid{
-    margin: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
 }
 .cagGrid{
-     margin: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 15px;
@@ -369,14 +366,17 @@ input:focus {
 .offer div{
     color: #e0ecff;
 }
+
 .zone{
     border-radius: 10px;
     padding: 10px;
     background-color: #76a1e7;
-    height: 100px;
+    height: auto;
     width: 300px;
 }
 .zonedimg{
+    height: 80px;
+    width: 80px;
     flex: 30%;
 }
 .zonedimg img{
@@ -486,11 +486,7 @@ footer{
 }
 
 
-.contact-content{
-    display:grid;
-    grid-template-columns:1.3fr 1fr;
-    gap:30px;
-}
+
 
 
 .contact-form-card{
@@ -632,12 +628,12 @@ footer{
 }
 
 
-.AddCart{
+.Add-Cart{
     padding: 15px;
     z-index: 5000;
     position: fixed;
     top: 0;
-    right: -370px;
+    right: -470px;
     width: 370px;
     height: 100vh;
     display: flex;
@@ -670,7 +666,7 @@ footer{
     margin-left: 20px;
     margin-top: -5px;
 }
-.AddCart.show{
+.Add-Cart.show{
     right: 0;
 }
 .cart-body{
@@ -866,3 +862,4 @@ footer{
     padding: 5px;
     
 }
+
