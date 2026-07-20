@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 CSRF_TRUSTED_ORIGINS = [
     "https://mobiletech-production.up.railway.app",
+    "https://mobiletech.onrender.com/"
 ]
 
 # Application definition
