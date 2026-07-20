@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 CSRF_TRUSTED_ORIGINS = [
     "https://mobiletech-production.up.railway.app",
-    "https://mobiletech.onrender.com/"
+    "https://mobiletech.onrender.com",
 ]
 
 # Application definition
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-ALLOWED_HOSTS = ["*", ".railway.app"]
+ALLOWED_HOSTS = ["*", ".railway.app", ".onrender.com"]
 
 
 # Password validation
