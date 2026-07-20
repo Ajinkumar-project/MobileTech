@@ -1,35 +1,37 @@
 {% load static%}
-<!DOCTYPE html>
+
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="{% static 'home.css' %}">
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="{% static 'home.css' %}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet" />
+    <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <link href="{% static 'responsive.css' %}" rel="stylesheet" />
 </head>
+
 <body>
-    
     <header>
-        <div class=" d-flex justify-content-around">
+        <div class="d-flex justify-content-around align-items-center py-2 px-3">
+            <div class="mobile-toggle d-lg-none" onclick="toggleMobileNav()">
+                <span class="material-symbols-outlined">menu</span>
+            </div>
             <div class="logo">
                 <tt> MOBILETECH</tt>
             </div>
             <ul class="nav justify-content-center flex-md-row">
                 <li class="nav-item">
-                    <span class="nav-link  navb active-bar" id="Home" onclick="activeTab('Home' ,'hom')">Home</span>
+                    <span class="nav-link navb active-bar" id="Home" onclick="activeTab('Home' ,'hom')">Home</span>
                 </li>
                 <li class="nav-item">
                     <span class="nav-link navb" id="Categories"
@@ -48,84 +50,81 @@
                     <span class="nav-link navb" id="Das" onclick="activeTab('Das','dash')">Dashboard</span>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'upload' %}" style="text-decoration: none;color: inherit;"> <span class="nav-link navb" id="Dsas" >Uploads</span></a> 
+                    <a href="{% url 'upload' %}" style="text-decoration: none;color: inherit;"> <span
+                            class="nav-link navb" id="Dsas">Uploads</span></a>
                 </li>
             </ul>
-            <div class="d-flex align-items-center search position-relative">
-    <input type="search" id="searchInput" placeholder="Search Devices... ">
-    <i class="fa fa-search"></i>
-    <div id="searchResults" class="search-results"></div>
-</div>
-
-            <div class="d-flex mx-5 materal align-items-center">
-                <div class="cart-icon" onclick="opencart()">
+            <div class="d-flex align-items-center search position-relative d-none d-md-flex">
+                <input id="searchInput" placeholder="Search Devices... " type="search" />
+                <i class="fa fa-search"></i>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            <div class="d-flex mx-2 mx-md-5 materal align-items-center">
+                <div class="cart-icon mr-3" onclick="opencart()">
                     <span class="material-symbols-outlined">
                         shopping_cart
                     </span>
-
                     <span class="cart-badge" id="cartCount">0</span>
                 </div>
                 <div class="account-container">
-
                     <span class="material-symbols-outlined account" id="account" onclick="openProfile()">
                         account_circle
                     </span>
-
                     <div class="profile-dropdown" id="profileDropdown">
-
                         <div class="profile-header">
                             <div class="profile-pic">
                                 {{ request.user.username|first|upper }}
                             </div>
-
                             <div>
                                 <h6> {{ request.user.username }}</h6>
                                 <small> {{ request.user.email }}</small>
                             </div>
                         </div>
-
-                        <hr>
-
-
-                        <div class="dropdownitem">
-                            Profile
-                        </div>
-
+                        <hr />
+                        <div class="dropdownitem">Profile</div>
                         <div class="dropdownitem logout">
                             <a href="{% url 'logout' %}">Logout</a>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
     </header>
-
-
+    <!-- Mobile Nav -->
+    <div class="overlay" id="navOverlay" onclick="toggleMobileNav()"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <div class="d-flex justify-content-between mb-4">
+            <h5>MENU</h5>
+            <span class="material-symbols-outlined" onclick="toggleMobileNav()">close</span>
+        </div>
+        <ul>
+            <li><span class="nav-link" onclick="activeTab('Home','hom'); toggleMobileNav()">Home</span></li>
+            <li><span class="nav-link"
+                    onclick="activeTab('Categories','categorie'); toggleMobileNav()">Categories</span></li>
+            <li><span class="nav-link" onclick="activeTab('Trending','trendin'); toggleMobileNav()">Trending</span></li>
+            <li><span class="nav-link" onclick="activeTab('About','abou'); toggleMobileNav()">About</span></li>
+            <li><span class="nav-link" onclick="activeTab('Contact','contac'); toggleMobileNav()">Contact</span></li>
+            <li><span class="nav-link" onclick="activeTab('Das','dash'); toggleMobileNav()">Dashboard</span></li>
+            <li><a class="nav-link" href="{% url 'upload' %}">Uploads</a></li>
+        </ul>
+    </div>
     <!-- addcart -->
-
-    <div class="AddCart">
-
+    <div class="Add-Cart">
         <div>
-            <div class="d-flex justify-content-end">
-                <h4 onclick="opencart()">X</h4>
+            <div class="d-flex justify-content-end p-3">
+                <h4 onclick="opencart()" style="cursor: pointer;">X</h4>
             </div>
-
             <center>
                 <h2>Add Cart</h2>
-                <hr>
+                <hr />
             </center>
         </div>
-
         <!-- Products -->
         <div class="cart-body" id="cart-body">
-
         </div>
-
         <!-- Footer -->
         <div class="cart-footer">
-            <hr>
+            <hr />
             <div class="d-flex justify-content-between">
                 <span>Total Amount </span>
                 <span class="totalAmount" id="totalAmount">₹ ---</span>
@@ -135,94 +134,89 @@
                 <button onclick="clearAll()"> Clear All </button>
             </div>
         </div>
-
     </div>
-
-
-
-
     <!-- body -->
-
-
-
     <!-- Home -->
-    <div class="cl1 page  activepage  " id="hom">
+    <div class="cl1 page activepage" id="hom">
         <div class="cl2"></div>
 
-
-        <div id="carousel" class="carousel slide" data-ride="carousel" data-bs-interval="2000">
+        <div class="carousel slide" data-bs-interval="2000" data-ride="carousel" id="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="cl3">
                         <div class="minititle">Next Gen Arrival</div>
-                        <div class="maintitle">Elite Tech,<br>
+                        <div class="maintitle">Elite Tech,<br />
                             <section>Pure Elegance.</section>
                         </div>
                         <div class="content">
-                            Experience the pinnacle of mobile engineering. Discover the <br>
-                            curated collection of flagship smartphones designed for the <br>
-                            sophisticated modern professional.
+                            Experience the pinnacle of mobile engineering. Discover the <span
+                                class="d-none d-lg-block"><br /></span> curated collection of flagship smartphones
+                            designed for the <span class="d-none d-lg-block"><br /></span> sophisticated modern
+                            professional.
                         </div>
                         <div class="mainbutten">
-                            <button class="btn-primary" onclick="activeTab('Categories' ,'categorie' )"> Explore Now </button>
+                            <button class="btn-primary" onclick="activeTab('Categories' ,'categorie' )"> Explore Now
+                            </button>
                             <button> View Deals </button>
                         </div>
                         <div class="banner">
-                            <img src="{% static 'images/samsung.png' %}" alt="">
+                            <img alt="" src="{% static 'images/samsung.png' %}" />
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="cl3">
                         <div class="minititle">Revolutionary Design</div>
-                        <div class="maintitle">Next-Gen,<br>
+                        <div class="maintitle">Next-Gen,<br />
                             <section>Folding Innovation.</section>
                         </div>
                         <div class="content">
-                            Reshape your reality with our latest foldable series. <br>
-                            Productivity meets portability in a design that defies <br>
-                            convention and sets new standards
+                            Reshape your reality with our latest foldable series. <span
+                                class="d-none d-lg-block"><br /></span> Productivity meets portability in a design that
+                            defies <span class="d-none d-lg-block"><br /></span> convention and sets new standards
                         </div>
                         <div class="mainbutten">
-                            <button class="btn-primary" onclick="activeTab('Categories' ,'categorie' )"> Explore Now </button>
+                            <button class="btn-primary" onclick="activeTab('Categories' ,'categorie' )"> Explore Now
+                            </button>
                             <button> View Deals </button>
                         </div>
                         <div class="banner">
-                            <img src="{% static 'images/Fold.png' %}" alt="">
+                            <img alt="" src="{% static 'images/Fold.png' %}" />
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="cl3">
                         <div class="minititle">Optics Reinvented</div>
-                        <div class="maintitle">Pro Cameras,<br>
+                        <div class="maintitle">Pro Cameras,<br />
                             <section>Cinematic Detail</section>
                         </div>
                         <div class="content">
-                            Capture the world like never before. <br>
-                            Our advanced multi-lens systems provide professional-grade <br>
-                            clarity for those who demand the absolute best in imaging
+                            Capture the world like never before. <span class="d-none d-lg-block"><br /></span> Our
+                            advanced multi-lens systems provide professional-grade <span
+                                class="d-none d-lg-block"><br /></span> clarity for those who demand the absolute best
+                            in imaging
                         </div>
                         <div class="mainbutten">
-                            <button class="btn-primary" onclick="activeTab('Categories' ,'categorie' )"> Explore Now </button>
+                            <button class="btn-primary" onclick="activeTab('Categories' ,'categorie' )"> Explore Now
+                            </button>
                             <button> View Deals </button>
                         </div>
                         <div class="banner">
-                            <img src="{% static 'images/iphone.png' %}" alt="">
+                            <img alt="" src="{% static 'images/iphone.png' %}" />
                         </div>
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <a class="carousel-control-prev" data-slide="prev" href="#carousel" role="button">
+                <span aria-hidden="true" class="carousel-control-prev-icon"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <a class="carousel-control-next" data-slide="next" href="#carousel" role="button">
+                <span aria-hidden="true" class="carousel-control-next-icon"></span>
                 <span class="sr-only">Next</span>
             </a>
         </div>
-
         <div class="midtab fade-element">
             <div>
                 Industry Giants
@@ -234,38 +228,32 @@
             <span onclick="goTo('Trending','trendin','Xiaomi')">XIAOMI</span>
             <span onclick="goTo('Trending','trendin','Asus')">ASUS</span>
         </div>
-
-        <div class="mx-4 fade-element">
-            <div class="d-flex justify-content-between ">
+        <div class="mx-md-4 fade-element">
+            <div class="d-flex justify-content-between px-3">
                 <span class="FlagshipHeading">Flagship Selection</span>
                 <span class="FlagshipHeadingall">View All</span>
             </div>
-
             <div class="FlagshipGrid">
                 {% for i in Flagshipdata %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
                         <span> <strong>⭐4.9</strong>(1002 Reviews)</span>
                         <button class="addcart"
-                            onclick="addCart('Apple Iphone 17 Pro','images/iphone-ad.webp' ,'134900')">Add Cart
+                            onclick="addCart('{{ i.name }}','{{ i.image.url }}' ,'{{ i.price }}')">Add Cart
                             +</button>
                     </div>
                 </div>
                 {% endfor %}
 
             </div>
-
         </div>
-
-
         <div class="midtab fade-element">
             <div>
                 Shop by Category
@@ -273,44 +261,41 @@
         </div>
         <div class="cagGrid">
             <div class="cagcard">
-                <img src="{% static 'images/performance.png' %}" alt="">
+                <img alt="" src="{% static 'images/performance.png' %}" />
                 <h4>Flagship</h4>
                 <span>Uncompromising performance</span>
             </div>
             <div class="cagcard">
-                <img src="{% static 'images/gaming.png' %}" alt="">
+                <img alt="" src="{% static 'images/gaming.png' %}" />
                 <h4>Gaming</h4>
                 <span>Limitless frame rates</span>
             </div>
             <div class="cagcard">
-                <img src="{% static 'images/budjet.png' %}" alt="">
+                <img alt="" src="{% static 'images/budjet.png' %}" />
                 <h4>Budget</h4>
                 <span>Essential tech redefined</span>
             </div>
             <div class="cagcard">
-                <img src="{% static 'images/foldable.png' %}" alt="">
+                <img alt="" src="{% static 'images/foldable.png' %}" />
                 <h4>Foldable</h4>
-                <span>
-                    Expanding horizons
-                </span>
+                <span>Expanding horizons</span>
             </div>
         </div>
-
         <div class="offer d-flex justify-content-around align-items-center">
-            <div>
+            <div class="mb-4 mb-lg-0">
                 <div class="minititle text-primary">LIMITED TIME</div>
-                <div class="maintitle">Midnight <br> Flash Sale,<br></div>
+                <div class="maintitle">Midnight <br /> Flash Sale,<br /></div>
                 <div class="content">
                     Save up to 40% on previous generation flagships.
-                    <br> Inventory is moving fast.
+                    <br /> Inventory is moving fast.
                 </div>
                 <div class="mainbutten">
                     <button>Shop The Sale</button>
                 </div>
             </div>
-            <div class="mx-3">
+            <div class="mx-3 mb-3 mb-lg-0">
                 <div class="d-flex zone">
-                    <div class="zonedimg"><img src="/media/products/bud_13r_42000.webp" alt="img"></div>
+                    <div class="zonedimg"><img alt="img" src="/media/products/bud_13r_42000.webp" /></div>
                     <div class="zoned">
                         <h6>OnePlus 15 5G</h6>
                         <span>₹72,510</span>
@@ -319,7 +304,7 @@
             </div>
             <div class="mx-3">
                 <div class="d-flex zone">
-                    <div class="zonedimg"><img src="/media/products/flag_-16_pro_130000_wpPyP2r.webp" alt="img"></div>
+                    <div class="zonedimg"><img alt="img" src="/media/products/flag_-16_pro_130000_wpPyP2r.webp" /></div>
                     <div class="zoned">
                         <h6>Apple Iphone 17 Pro</h6>
                         <span>₹1,30,900</span>
@@ -328,65 +313,49 @@
             </div>
         </div>
     </div>
-
-
-
     <!-- Categories -->
-
-    <div class=" cl1 page" id="categorie">
-
+    <div class="cl1 page" id="categorie">
         <div class="midtab">
             <div>
                 Shop by Category
             </div>
         </div>
         <div class="cagGrid fade-element">
-            <div onclick="autoScroll('Flagship')" class="cagcard">
-                <img src="{% static 'images/performance.png' %}" alt="">
+            <div class="cagcard" onclick="autoScroll('Flagship')">
+                <img alt="" src="{% static 'images/performance.png' %}" />
                 <h4>Flagship</h4>
                 <span>Uncompromising performance</span>
             </div>
-            <div onclick="autoScroll('Gaming')" class="cagcard">
-                <img src="{% static 'images/gaming.png' %}" alt="">
+            <div class="cagcard" onclick="autoScroll('Gaming')">
+                <img alt="" src="{% static 'images/gaming.png' %}" />
                 <h4>Gaming</h4>
                 <span>Limitless frame rates</span>
             </div>
-            <div onclick="autoScroll('Budget')" class="cagcard">
-                <img src="{% static 'images/budjet.png' %}" alt="">
+            <div class="cagcard" onclick="autoScroll('Budget')">
+                <img alt="" src="{% static 'images/budjet.png' %}" />
                 <h4>Budget</h4>
                 <span>Essential tech redefined</span>
             </div>
-            <div onclick="autoScroll('Foldable')" class="cagcard">
-                <img src="{% static 'images/foldable.png' %}" alt="">
+            <div class="cagcard" onclick="autoScroll('Budget')">
+                <img alt="" src="{% static 'images/foldable.png' %}" />
                 <h4>Foldable</h4>
-                <span>
-                    Expanding horizons
-                </span>
+                <span>Expanding horizons</span>
             </div>
         </div>
-
-        <div class="mx-4 fade-element">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element">
             <div class="midtab" id="Flagship">
                 <div>
                     Flagship Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
-
                 {% for i in flagship %}
-
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price}}</strong></span>
                         </div>
@@ -396,33 +365,23 @@
                             +</button>
                     </div>
                 </div>
-
                 {% endfor %}
-
             </div>
-
         </div>
-
-        <div class="mx-4 fade-element">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element">
             <div class="midtab" id="Gaming">
                 <div>
                     Gaming Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
                 {% for i in gaming %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -435,29 +394,23 @@
                 {% endfor %}
 
             </div>
-
         </div>
-
-
-
         <!-- budjut -->
-        <div class="mx-4 fade-element">
+        <div class="mx-md-4 fade-element">
             <div class="midtab" id="Budget">
                 <div>
                     Budget Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
 
                 {% for i in budget %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -470,30 +423,22 @@
                 {% endfor %}
 
             </div>
-
         </div>
-
         <!-- Fold -->
-        <div class="mx-4 fade-element">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element">
             <div class="midtab" id="Foldable">
                 <div>
                     Foldable Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
                 {% for i in foldable %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -506,47 +451,25 @@
                 {% endfor %}
 
             </div>
-
         </div>
     </div>
-
-
-
-
-
-
-
-
     <!-- Trending -->
-
-
-
-
-
-
     <div class="cl1 page fade-element" id="trendin">
-
-        <div class="mx-4" id="IPhone">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4" id="IPhone">
             <div class="midtab" id="Gaming">
                 <div>
                     IPhone Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
-                
-                {% for i in iphone %}  
+
+                {% for i in iphone %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price}}</strong></span>
                         </div>
@@ -559,31 +482,22 @@
                 {% endfor %}
             </div>
         </div>
-
-
         <!-- sam -->
-
-        <div class="mx-4 fade-element" id="Samsung">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element" id="Samsung">
             <div class="midtab" id="Gaming">
                 <div>
                     Samsung Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
                 {% for i in samsung %}
 
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -593,35 +507,26 @@
                             +</button>
                     </div>
                 </div>
-                
+
                 {% endfor %}
             </div>
         </div>
-
-
         <!-- One -->
-
-        <div class="mx-4 fade-element" id="OnePlus">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element" id="OnePlus">
             <div class="midtab" id="Gaming">
                 <div>
                     OnePlus Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
 
                 {% for i in oneplus %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{ i.image.url }}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -635,31 +540,23 @@
 
             </div>
         </div>
-
         <!-- Google -->
-
-        <div class="mx-4 fade-element" id="Google">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element" id="Google">
             <div class="midtab" id="Gaming">
                 <div>
                     Google Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
-                
+
                 {% for i in google %}
-                    
+
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{i.image.url}}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -672,30 +569,21 @@
                 {% endfor %}
             </div>
         </div>
-
-
         <!-- xami -->
-
-        <div class="mx-4 fade-element" id="Xiaomi">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element" id="Xiaomi">
             <div class="midtab" id="Gaming">
                 <div>
                     Xiaomi Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
                 {% for i in xiaomi %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{i.image.url}}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -708,30 +596,21 @@
                 {% endfor %}
             </div>
         </div>
-
-
         <!-- Asus -->
-
-        <div class="mx-4 fade-element" id="Asus">
-            <!-- <div class="d-flex justify-content-between ">
-            <span class="FlagshipHeading" ></span>
-            <span class="FlagshipHeadingall" >View All</span>
-        </div> -->
+        <div class="mx-md-4 fade-element" id="Asus">
             <div class="midtab" id="Gaming">
                 <div>
                     Asus Selection
                 </div>
             </div>
-
             <div class="FlagshipGrid">
                 {% for i in asus %}
                 <div class="cards">
                     <div class="Prodectimg">
-                        <img src="{{i.image.url}}" alt="">
+                        <img alt="" src="{{i.image.url}}" />
                     </div>
-
                     <div class="Prodectdtl">
-                        <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-between">
                             <span class="proname">{{ i.name }}</span>
                             <span class="text-primary"><strong>₹{{ i.price }}</strong></span>
                         </div>
@@ -744,46 +623,35 @@
                 {% endfor %}
             </div>
         </div>
-
-
-
-
     </div>
-
-
     <!-- about -->
-
-
     <div class="cl1 page" id="abou">
-
         <center>
-            <div class="cl3 fade-element">
+            <div class="fade-element ">
                 <div class="minititle">Precision Engineering</div>
-                <div class=" maintitle" style="font-size: 80px;">The Future of Mobile,<br>
+                <div class="maintitle">The Future of Mobile,<br />
                     <section>Curated.</section>
                 </div>
                 <div class="content">
-                    We select only the zenith of mobile technology, <br>
+                    We select only the zenith of mobile technology, <br class="d-none d-lg-block" />
                     where high-performance hardware meets artisanal design.
                 </div>
                 <div class="mainbutten">
                     <button class="btn-primary"> Explore Now </button>
                     <button> View Deals </button>
                 </div>
-
             </div>
         </center>
-        <div class="cl3 fade-element" style="margin-top: 200px;">
-
-            <div class="maintitle">A Commitment to <br>
+        <div class="cl3 fade-element" style="margin-top: 50px;">
+            <div class="maintitle">A Commitment to <br />
                 <section>Technical Elegance</section>
             </div>
-            <div class="content " style="margin-top: 50px;">
-                At AetherMobile, we believe that a smartphone <br>
-                is more than just a tool—it's an extension of <br>
-                your professional and personal identity.<br>
-                Our vision is to bridge the gap between complex <br>
-                technical specifications and the seamless elegance <br>
+            <div class="content" style="margin-top: 50px;">
+                At AetherMobile, we believe that a smartphone <br class="d-none d-lg-block" />
+                is more than just a tool—it's an extension of <br class="d-none d-lg-block" />
+                your professional and personal identity.<br />
+                Our vision is to bridge the gap between complex <br class="d-none d-lg-block" />
+                technical specifications and the seamless elegance <br class="d-none d-lg-block" />
                 of high-end lifestyle design.
             </div>
             <div class="mainbutten2">
@@ -795,35 +663,21 @@
                 </button>
             </div>
             <div class="banner">
-                <img class="imag2" src="{% static 'images/Fold.png' %}" alt="">
+                <img alt="" class="imag2" src="{% static 'images/Fold.png' %}" />
             </div>
         </div>
-
-
-
-
-
-
     </div>
-
-
     <!-- Contact -->
-
     <div class="cl1 page" id="contac">
-
-        <div class="midtab" id="Gaming">
+        <div class="midtab text-center" id="Gaming">
             <div>
                 We're Here to Help.
-                <h6> Technical excellence is paired with unparalleled support. <br>
+                <h6> Technical excellence is paired with unparalleled support. <br class="d-none d-lg-block" />
                     Our team of experts is ready to assist you with any inquiry. </h6>
             </div>
         </div>
-
-
         <section class="contact-section">
-
-            <div class="fade-element contact-info-cards">
-
+            <div class="fade-element contact-info-cards px-3">
                 <div class="contact-info-card">
                     <div class="contact-icon">🎧</div>
                     <h3>Support</h3>
@@ -831,7 +685,6 @@
                     <a>support@mobile.com</a>
                     <span>+91 1234567890</span>
                 </div>
-
                 <div class="contact-info-card">
                     <div class="contact-icon">📍</div>
                     <h3>Headquarters</h3>
@@ -839,7 +692,6 @@
                     <a>100 Innovation Circuit</a>
                     <span>Silicon Valley, India</span>
                 </div>
-
                 <div class="contact-info-card">
                     <div class="contact-icon">📰</div>
                     <h3>Press</h3>
@@ -847,91 +699,61 @@
                     <a>press@mobile.com</a>
                     <span>Response within 24 hours</span>
                 </div>
-
             </div>
-
-            <div class="fade-element contact-content">
-
+            <div class="fade-element contact-content px-3">
                 <div class="contact-form-card">
-
                     <h2 class="contact-title">Send a Message</h2>
                     <p class="contact-subtitle">
                         We typically respond to all inquiries within one business day.
                     </p>
-
                     <form class="contact-form" method="post">
                         {% csrf_token %}
                         <div class="contact-form-row">
-                            <input class="contact-input" type="text" placeholder="Full Name" name="full_name">
-                            <input class="contact-input" type="email" placeholder="Email Address" name="email">
+                            <input class="contact-input" name="full_name" placeholder="Full Name" type="text" />
+                            <input class="contact-input" name="email" placeholder="Email Address" type="email" />
                         </div>
-
-                        <input class="contact-input" type="text" placeholder="Subject"  name="subject">
-
-                        <textarea class="contact-textarea" rows="6" placeholder="How can we help you?"  name="message"></textarea>
-
-                        <button class="contact-btnn" type="submit" name="contact_submit">
+                        <input class="contact-input" name="subject" placeholder="Subject" type="text" />
+                        <textarea class="contact-textarea" name="message" placeholder="How can we help you?"
+                            rows="6"></textarea>
+                        <button class="contact-btnn" name="contact_submit" type="submit">
                             Send Message
                         </button>
-
                     </form>
-
                 </div>
-
-                <div class="contact-sidebar">
-
+                <div class="contact-sidebar mt-4 mt-lg-0">
                     <div class="contact-location-card">
-
-                        <img class="contact-location-image" src="{% static 'images/office.jpg' %}" alt="Innovation Hub">
-
+                        <img alt="Innovation Hub" class="contact-location-image"
+                            src="{% static 'images/office.jpg' %}" />
                         <div class="contact-location-overlay">
                             <span class="contact-location-label">
                                 OUR LABORATORY
                             </span>
-
                             <h3 class="contact-location-title">
                                 Innovation Hub, CA
                             </h3>
                         </div>
-
                     </div>
-
                     <div class="contact-visit-card">
-
                         <span class="contact-visit-label">
                             VISIT US
                         </span>
-
                         <h4 class="contact-visit-title">
                             Mon - Fri: 9am - 6pm
                         </h4>
-
                         <p class="contact-visit-text">
                             Sat - Sun: Appointment Only
                         </p>
-
                         <p class="contact-visit-text">
                             Located in the heart of the Innovation District,
                             just 5 minutes from Central Transit Hub.
                         </p>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
-
-
     </div>
-
-
     <!-- DashBoard -->
-
-
     <div class="cl1 page" id="dash">
-
         <div class="d-flex">
             <div class="DashBar">
                 <ul>
@@ -951,15 +773,14 @@
                         Delivered
                     </li>
                 </ul>
-
             </div>
             <div class="DashContent">
                 <div class="Dash-board activedash" id="Dashboard">
-                    <div class="cl4">
+                    <div class="cl4 mb-4">
                         <div class="maintitle">Welcome back,
                             <section>Admin.</section>
                         </div>
-                        <div class="content " style="margin-top: 10px;">
+                        <div class="content" style="margin-top: 10px;">
                             Here's what's happening with your MobileTech ecosystem today.
                         </div>
                     </div>
@@ -982,96 +803,78 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Total orders -->
                 <div class="Dash-board" id="Total_Orders">
-                    <div class="cl4">
-                        <div class="maintitle ">Total Orders -
-                           <div class="totalorder d-inline">0</div> 
+                    <div class="cl4 mb-4">
+                        <div class="maintitle">Total Orders -
+                            <div class="totalorder d-inline">0</div>
                         </div>
                     </div>
-                    <div class="gap-3 Pending_orderlist" style="display: grid; grid-template-columns: repeat(3, 1fr);" id="Pending_orderlist">
-                    
-                    
+                    <div class="gap-3 Pending_orderlist" id="Pending_orderlist"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
                     </div>
-
                 </div>
                 <!-- Pending Oder -->
                 <div class="Dash-board" id="Pending_Orders">
-                    <div class="cl4 d-flex justify-content-between">
+                    <div class="cl4 d-flex justify-content-between flex-wrap">
                         <div class="maintitle">Pending Orders -
-                            <div class="pendingorder d-inline ">0</div>
+                            <div class="pendingorder d-inline">0</div>
                         </div>
-                        <button class="chceko" onclick="checkout()">Check Out</button>
+                        <button class="chceko mt-2 mt-md-0" onclick="checkout()">Check Out</button>
                     </div>
-                    <div class="gap-3 Pending_orderlist pend" style="display: grid; grid-template-columns: repeat(3, 1fr);" id="Pend_orderlist">
-                    
-                    
+                    <div class="gap-3 Pending_orderlist pend" id="Pend_orderlist"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
                     </div>
                 </div>
                 <!-- Total Amounts -->
-                <div class="Dash-board " id="Total_Amount">
+                <div class="Dash-board" id="Total_Amount">
                     <div class="totalheader">
-                    <div class="cl4">
-                        <div class="maintitle">Total Amount 
+                        <div class="cl4 mb-4">
+                            <div class="maintitle">Total Amount
+                            </div>
+                        </div>
+                        <div class="gap-3 Pending_orderlist"
+                            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
                         </div>
                     </div>
-                    <div class="gap-3 Pending_orderlist" style="display: grid; grid-template-columns: repeat(3, 1fr);" id="Pending_orderlist">
-                    
-                    
-                    </div>
-                    </div>
-
                     <!-- Footer  -->
-                    <div class="totalamount">
-                       <center>
-                         <h4>Total Amount --- <h4 class="total_amount">0</h4></h4>
-                       </center>
+                    <div class="totalamount p-4 bg-light mt-4">
+                        <center>
+                            <h4>Total Amount --- </h4>
+                            <h4 class="total_amount">0</h4>
+                        </center>
                     </div>
                 </div>
                 <!-- Delivered -->
                 <div class="Dash-board" id="Delivered">
-                    <div class="cl4">
+                    <div class="cl4 mb-4">
                         <div class="maintitle">Delivered -
-                            <div class="delivered d-inline ">0</div>
+                            <div class="delivered d-inline">0</div>
                         </div>
                     </div>
-                    <div class="gap-3 " style="display: grid; grid-template-columns: repeat(3, 1fr);" id="delivered_orderlist">
-                    
-                    
+                    <div class="gap-3" id="delivered_orderlist"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
                     </div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
-
-
-
-
-
-
     <!-- Footer -->
-
     <footer>
-
-        <div class="d-flex justify-content-around px-4">
-            <div>
-
+        <div class="d-flex flex-wrap justify-content-around px-4">
+            <div class="mb-4">
                 <ul>
                     <li>
                         <h5>MOBILETECH</h5>
                     </li>
                     <li class="">
-                        Redefining the mobile shopping <br> experience with technical <br> precision and sophisticated
-                        <br> design.
+                        Redefining the mobile shopping <br /> experience with technical <br /> precision and
+                        sophisticated
+                        <br /> design.
                     </li>
                 </ul>
             </div>
-            <div>
-
+            <div class="mb-4">
                 <ul>
                     <li>
                         <h5>
@@ -1083,8 +886,7 @@
                     <li class="footeritem">Newsroom</li>
                 </ul>
             </div>
-            <div>
-
+            <div class="mb-4">
                 <ul>
                     <li>
                         <h5>
@@ -1096,8 +898,7 @@
                     <li class="footeritem">Contact Support</li>
                 </ul>
             </div>
-            <div>
-
+            <div class="mb-4">
                 <ul>
                     <li>
                         <h5 onclick="autoScroll()">
@@ -1109,16 +910,17 @@
                 </ul>
             </div>
         </div>
-
-        <div class="d-block align-items-center copy">
-            <hr>
+        <div class="d-block align-items-center copy text-center py-4">
+            <hr />
             © 2024 MobileTech. Technical Elegance Defined.
         </div>
     </footer>
+    <div class="d-none d-lg-block" id="cursor"></div>
+    <div class="d-none d-lg-block" id="cursordot"></div>
 
 
-    <div id="cursor"></div>
-    <div id="cursordot"></div>
 </body>
+
 <script src="{% static 'home.js' %}"></script>
+
 </html>

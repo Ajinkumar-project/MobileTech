@@ -119,7 +119,7 @@ window.addEventListener("scroll", function() {
 });
 
 function opencart(){
-    document.querySelector(".AddCart")
+    document.querySelector(".Add-Cart")
         .classList.toggle("show");
 }
 function openProfile(){
@@ -294,3 +294,18 @@ document.addEventListener('click', function(event) {
     }
    
 });
+
+
+function toggleMobileNav() {
+            const nav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('navOverlay');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+const originalActiveTab = window.activeTab;
+        window.activeTab = function(tabName, sectionId) {
+            if(typeof originalActiveTab === 'function') {
+                originalActiveTab(tabName, sectionId);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
